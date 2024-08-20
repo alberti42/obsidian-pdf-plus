@@ -715,6 +715,20 @@ export class PDFPlusLib {
                 const url = URL.createObjectURL(new Blob([res.arrayBuffer], { type: 'application/pdf' }));
                 return url;
             }
+        } else if (content.startsWith('x-bdsk://')) {
+            const getBibtexIntegration = this.plugin.getBibtexIntegration();
+            if(getBibtexIntegration) {
+                const url = await getBibtexIntegration.getUrlForCitekey(content);
+                if(url) {
+                    return Platform.resourcePathPrefix + url.substring(8);
+                } else {
+                    console.error("Error:", `Could not resolve bibdesk url ${content}`);
+                }
+                return null;
+            } else {
+                return null;
+            }
+            
         } else if (content.startsWith('file:///')) {
             return Platform.resourcePathPrefix + content.substring(8);
         }

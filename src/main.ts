@@ -9,7 +9,7 @@ import { DomManager } from 'dom-manager';
 import { PDFCroppedEmbed } from 'pdf-cropped-embed';
 import { DEFAULT_SETTINGS, PDFPlusSettings, PDFPlusSettingTab } from 'settings';
 import { subpathToParams, OverloadParameters, focusObsidian, isTargetHTMLElement } from 'utils';
-import { DestArray, ObsidianViewer, PDFEmbed, PDFView, PDFViewerChild, PDFViewerComponent, Rect } from 'typings';
+import { BibtexIntegration, DestArray, ObsidianViewer, PDFEmbed, PDFView, PDFViewerChild, PDFViewerComponent, Rect } from 'typings';
 import { ExternalPDFModal, InstallerVersionModal } from 'modals';
 import { PDFExternalLinkPostProcessor, PDFInternalLinkPostProcessor, PDFOutlineItemPostProcessor, PDFThumbnailItemPostProcessor } from 'post-process';
 import { BibliographyManager } from 'bib';
@@ -78,6 +78,8 @@ export default class PDFPlus extends Plugin {
 	shownMenus: Set<Menu> = new Set();
 	isDebugMode: boolean = false;
 
+    bibtexIntegration: BibtexIntegration | null = null;
+
 	async onload() {
 		this.checkVersion();
 
@@ -113,6 +115,19 @@ export default class PDFPlus extends Plugin {
 
 		this.addSettingTab(this.settingTab = new PDFPlusSettingTab(this));
 	}
+
+    getBibtexIntegration():BibtexIntegration|null {
+
+        if(this.bibtexIntegration) return this.bibtexIntegration;
+
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const bibtexIntegration = this.app.plugins.plugins['bibtex-integration'] as any;
+
+        if (bibtexIntegration && bibtexIntegration.getUrlForCitekey) {
+            this.bibtexIntegration = bibtexIntegration;
+            return bibtexIntegration;
+        } else return null;
+    }
 
 	async onunload() {
 		await this.cleanUpResources();

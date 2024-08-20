@@ -954,6 +954,10 @@ interface HotkeyManager {
     printHotkeyForCommand(id: string): string;
 }
 
+interface BibtexIntegration extends Plugin {
+    getUrlForCitekey(citekey: string): string;
+}
+
 declare module 'obsidian' {
     interface App {
         setting: AppSetting;
