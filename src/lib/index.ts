@@ -723,6 +723,7 @@ export class PDFPlusLib {
                     return Platform.resourcePathPrefix + url.substring(8);
                 } else {
                     console.error("Error:", `Could not resolve bibdesk url ${content}`);
+                    return null;
                 }
                 return null;
             } else {
