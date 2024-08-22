@@ -123,7 +123,7 @@ export default class PDFPlus extends Plugin {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const bibtexIntegration = this.app.plugins.plugins['bibtex-integration'] as any;
 
-        if (bibtexIntegration && bibtexIntegration.getUrlForCitekey) {
+        if (bibtexIntegration && bibtexIntegration.getPdfUrlFromUrl) {
             this.bibtexIntegration = bibtexIntegration;
             return bibtexIntegration;
         } else return null;

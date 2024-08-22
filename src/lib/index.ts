@@ -718,11 +718,11 @@ export class PDFPlusLib {
         } else if (content.startsWith('x-bdsk://')) {
             const getBibtexIntegration = this.plugin.getBibtexIntegration();
             if(getBibtexIntegration) {
-                const url = await getBibtexIntegration.getUrlForCitekey(content);
+                const url = await getBibtexIntegration.getPdfUrlFromUrl(content);
                 if(url) {
                     return Platform.resourcePathPrefix + url.substring(8);
                 } else {
-                    console.error("Error:", `Could not resolve bibdesk url ${content}`);
+                    console.error("Error:", `could not resolve url: ${content}`);
                     return null;
                 }
                 return null;

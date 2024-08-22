@@ -955,7 +955,7 @@ interface HotkeyManager {
 }
 
 interface BibtexIntegration extends Plugin {
-    getUrlForCitekey(citekey: string): string;
+    getPdfUrlFromUrl(url: string): string;
 }
 
 declare module 'obsidian' {
